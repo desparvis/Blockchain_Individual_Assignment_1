@@ -13,7 +13,7 @@ The name is the executable file that will be given once you compile the C progra
 ## Required libraries:
 
 You need the following libraries(I assume you are using a Linux environment):<br>
-GCC and Make with OpenSSL library: `sudo apt update`<br>
+GCC and Make with OpenSSL library: `sudo apt update` and
 `sudo apt install build-essential libssl-dev`
 
 ## Author
