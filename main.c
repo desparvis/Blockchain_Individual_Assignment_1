@@ -535,13 +535,28 @@ void view_records() {
 }
 
 void display_balances_state() {
-    printf("\n=== GLOBAL TOKENS VALUE BALANCE LOG ===\n");
-    for (int i = 0; i < student_count; i++) {
-        int balance = (current_model == MODEL_UTXO) ? get_utxo_balance(student_registry[i].student_id) : account_registry[i].balance;
-        printf("  Student: %-10s | Profile Name: %-15s | Token Balance: %d coins\n", 
-               student_registry[i].student_id, student_registry[i].full_name, balance);
+    if (current_model == MODEL_UTXO) {
+        printf("\n=== GLOBAL TOKENS VALUE BALANCE LOG (UTXO MODE) ===\n");
+        for (int i = 0; i < student_count; i++) {
+            int balance = get_utxo_balance(student_registry[i].student_id);
+            printf("  Student: %-10s | Profile Name: %-15s | Token Balance: %d coins\n", 
+                   student_registry[i].student_id, student_registry[i].full_name, balance);
+        }
+        print_utxo_set();
+    } else {
+        printf("\n================== GLOBAL ACCOUNT REGISTER LEDGER ==================\n");
+        printf("| Student ID | Profile Name    | Account Balance | Current Nonce |\n");
+        printf("------------------------------------------------------------------\n");
+        for (int i = 0; i < student_count; i++) {
+            printf("| %-10s | %-15s | %-13d coins | %-13d |\n", 
+                   account_registry[i].student_id, 
+                   student_registry[i].full_name, 
+                   account_registry[i].balance, 
+                   account_registry[i].nonce);
+        }
+        printf("------------------------------------------------------------------\n");
+        printf(" [i] State lookup optimization: O(1) direct array indexing active.\n");
     }
-    if (current_model == MODEL_UTXO) print_utxo_set();
 }
 
 void execute_tamper_simulation() {
